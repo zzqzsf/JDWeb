@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.lanqiao.jd.mapper.GoodsMapper" >
+  <resultMap id="GoodsResultMap" type="org.lanqiao.jd.entity.Goods" >
+    <id column="goods_id" property="goodsId" jdbcType="INTEGER" />
+    <result column="goods_name" property="goodsName" jdbcType="VARCHAR" />
+    <result column="sort_id" property="sortId" jdbcType="INTEGER" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="goods_num" property="goodsNum" jdbcType="INTEGER" />
+    <result column="brands_id" property="brandsId" jdbcType="INTEGER" />
+    <result column="goods_sales" property="goodsSales" jdbcType="INTEGER" />
+    <result column="goods_create_time" property="goodsCreateTime" jdbcType="TIMESTAMP" />
+    <collection property="imageSet" resultMap="ImageResultMap"></collection>
+  </resultMap>
+  <resultMap id="ImageResultMap" type="org.lanqiao.jd.entity.Image" >
+    <result column="img_url" property="imgUrl" jdbcType="VARCHAR" />
+    <result column="img_desc" property="imgDesc" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    goods_id, goods_name, sort_id, price, goods_num, brands_id, goods_sales, goods_create_time
+  </sql>
+  <select id="selectGoodsId" resultMap="GoodsResultMap" parameterType="java.lang.String">
+    select goods_id
+    from goods
+    where goods_name=#{goodsName,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPrimaryKey" resultMap="GoodsResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="org.lanqiao.jd.entity.Goods" >
+    insert into goods (goods_id, goods_name, sort_id, 
+      price, goods_num, brands_id, 
+      goods_sales, goods_create_time)
+    values (#{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{sortId,jdbcType=INTEGER}, 
+      #{price,jdbcType=DOUBLE}, #{goodsNum,jdbcType=INTEGER}, #{brandsId,jdbcType=INTEGER}, 
+      #{goodsSales,jdbcType=INTEGER}, #{goodsCreateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="org.lanqiao.jd.entity.Goods" >
+    insert into goods
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        goods_id,
+      </if>
+      <if test="goodsName != null" >
+        goods_name,
+      </if>
+      <if test="sortId != null" >
+        sort_id,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="goodsNum != null" >
+        goods_num,
+      </if>
+      <if test="brandsId != null" >
+        brands_id,
+      </if>
+      <if test="goodsSales != null" >
+        goods_sales,
+      </if>
+      <if test="goodsCreateTime != null" >
+        goods_create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null" >
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null" >
+        #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsNum != null" >
+        #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="brandsId != null" >
+        #{brandsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSales != null" >
+        #{goodsSales,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCreateTime != null" >
+        #{goodsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.lanqiao.jd.entity.Goods" >
+    update goods
+    <set >
+      <if test="goodsName != null" >
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="sortId != null" >
+        sort_id = #{sortId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="goodsNum != null" >
+        goods_num = #{goodsNum,jdbcType=INTEGER},
+      </if>
+      <if test="brandsId != null" >
+        brands_id = #{brandsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsSales != null" >
+        goods_sales = #{goodsSales,jdbcType=INTEGER},
+      </if>
+      <if test="goodsCreateTime != null" >
+        goods_create_time = #{goodsCreateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.lanqiao.jd.entity.Goods" >
+    update goods
+    set goods_name = #{goodsName,jdbcType=VARCHAR},
+      sort_id = #{sortId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      goods_num = #{goodsNum,jdbcType=INTEGER},
+      brands_id = #{brandsId,jdbcType=INTEGER},
+      goods_sales = #{goodsSales,jdbcType=INTEGER},
+      goods_create_time = #{goodsCreateTime,jdbcType=TIMESTAMP}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+</mapper>
